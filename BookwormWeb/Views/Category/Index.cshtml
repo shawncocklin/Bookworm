@@ -1,0 +1,22 @@
+﻿
+@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="heading">Index Category</h1>
+
+<div class="flex main-container">
+    <div class="titles flex">
+        <p class="title-name">Category Name</p>
+        <p class="title-order">Display Order</p>
+    </div>
+    <div class="content flex">
+        @foreach(var obj in Model) {
+            <div class="content-name border"><p>@obj.CategoryName</p></div>
+            <div class="content-order border"><p>@obj.DisplayOrder</p></div>
+        }
+    </div>
+</div>
+
+

@@ -4,19 +4,32 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="heading">Index Category</h1>
+<div class="container p-3">
 
-<div class="flex main-container">
-    <div class="titles flex">
-        <p class="title-name">Category Name</p>
-        <p class="title-order">Display Order</p>
+    <div class="row pt-4 pb-4">
+        <div class="col-6">
+            <h2 class="text-primary">Category List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-circle"></i> &nbsp; Add Category</a>
+        </div>
     </div>
-    <div class="content flex">
-        @foreach(var obj in Model) {
-            <div class="content-name border"><p>@obj.CategoryName</p></div>
-            <div class="content-order border"><p>@obj.DisplayOrder</p></div>
-        }
-    </div>
+    <table class="table table-primary table-bordered table-striped" style="width: 100%">
+        <thead>
+            <tr>
+                <th>Category Name</th>
+                <th>Display Order</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in Model) {
+                <tr>
+                    <td width="50%">@obj.CategoryName</td>
+                    <td width="30%">@obj.DisplayOrder</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 

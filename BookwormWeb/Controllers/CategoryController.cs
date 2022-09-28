@@ -19,9 +19,95 @@ namespace BookwormWeb.Controllers
             return View(objCategoryList);
         }
 
+        // GET method 
         public IActionResult Create()
         {
             return View();
+        }
+
+        // POST method
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category obj)
+        {
+            
+            if(ModelState.IsValid)
+            {
+                this.db.Add(obj);
+                this.db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
+            
+        }
+
+        // GET method 
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var categoryFromDBbyID = this.db.Categories.Find(id);
+
+            if(categoryFromDBbyID == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDBbyID);
+        }
+
+        // POST method
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Category obj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                this.db.Update(obj);
+                this.db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
+
+        }
+
+        // GET method 
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            var categoryFromDBbyID = this.db.Categories.Find(id);
+
+            if (categoryFromDBbyID == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDBbyID);
+        }
+
+        // POST method
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+
+            var obj = this.db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            this.db.Remove(obj);
+            this.db.SaveChanges();
+            return RedirectToAction("Index");
+
         }
     }
 }

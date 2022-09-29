@@ -1,4 +1,4 @@
-namespace BookwormWeb.Models
+namespace Bookworm.Models
 {
     public class ErrorViewModel
     {

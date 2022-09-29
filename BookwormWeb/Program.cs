@@ -1,4 +1,4 @@
-using BookwormWeb.Data;
+using Bookworm.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

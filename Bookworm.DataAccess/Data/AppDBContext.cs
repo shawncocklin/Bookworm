@@ -1,7 +1,7 @@
-﻿using BookwormWeb.Models;
+﻿using Bookworm.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookwormWeb.Data
+namespace Bookworm.DataAccess
 {
     public class AppDBContext : DbContext
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BookwormWeb.Migrations
+namespace Bookworm.DataAccess.Migrations
 {
     public partial class AddCategoryToDatabase : Migration
     {

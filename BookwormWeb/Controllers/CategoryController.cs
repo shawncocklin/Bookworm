@@ -1,5 +1,5 @@
-﻿using BookwormWeb.Data;
-using BookwormWeb.Models;
+﻿using Bookworm.DataAccess;
+using Bookworm.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookwormWeb.Controllers

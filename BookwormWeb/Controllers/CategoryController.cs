@@ -35,6 +35,7 @@ namespace BookwormWeb.Controllers
             {
                 this.db.Add(obj);
                 this.db.SaveChanges();
+                TempData["success"] = "Created category successfuly";
                 return RedirectToAction("Index");
             }
 
@@ -69,6 +70,7 @@ namespace BookwormWeb.Controllers
             {
                 this.db.Update(obj);
                 this.db.SaveChanges();
+                TempData["success"] = "Updated category successfuly";
                 return RedirectToAction("Index");
             }
 
@@ -106,6 +108,7 @@ namespace BookwormWeb.Controllers
             }
             this.db.Remove(obj);
             this.db.SaveChanges();
+            TempData["success"] = "Deleted category successfuly";
             return RedirectToAction("Index");
 
         }

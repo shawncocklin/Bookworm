@@ -1,4 +1,5 @@
 ﻿using Bookworm.DataAccess;
+using Bookworm.DataAccess.Repository.IRepository;
 using Bookworm.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,16 +7,16 @@ namespace BookwormWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly AppDBContext db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(AppDBContext db)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            _unitOfWork = unitOfWork;
         }
-        
+
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = db.Categories;
+            IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
 
@@ -33,8 +34,8 @@ namespace BookwormWeb.Controllers
             
             if(ModelState.IsValid)
             {
-                this.db.Add(obj);
-                this.db.SaveChanges();
+                _unitOfWork.Category.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Created category successfuly";
                 return RedirectToAction("Index");
             }
@@ -51,7 +52,7 @@ namespace BookwormWeb.Controllers
                 return NotFound();
             }
 
-            var categoryFromDBbyID = this.db.Categories.Find(id);
+            var categoryFromDBbyID = _unitOfWork.Category.GetFirstOrDefault(item=>item.ID == id);
 
             if(categoryFromDBbyID == null)
             {
@@ -68,8 +69,8 @@ namespace BookwormWeb.Controllers
 
             if (ModelState.IsValid)
             {
-                this.db.Update(obj);
-                this.db.SaveChanges();
+                _unitOfWork.Category.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Updated category successfuly";
                 return RedirectToAction("Index");
             }
@@ -86,7 +87,7 @@ namespace BookwormWeb.Controllers
                 return NotFound();
             }
 
-            var categoryFromDBbyID = this.db.Categories.Find(id);
+            var categoryFromDBbyID = _unitOfWork.Category.GetFirstOrDefault(item => item.ID == id);
 
             if (categoryFromDBbyID == null)
             {
@@ -101,13 +102,13 @@ namespace BookwormWeb.Controllers
         public IActionResult DeletePOST(int? id)
         {
 
-            var obj = this.db.Categories.Find(id);
+            var obj = _unitOfWork.Category.GetFirstOrDefault(item => item.ID == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            this.db.Remove(obj);
-            this.db.SaveChanges();
+            _unitOfWork.Category.Remove(obj);
+            _unitOfWork.Save();
             TempData["success"] = "Deleted category successfuly";
             return RedirectToAction("Index");
 

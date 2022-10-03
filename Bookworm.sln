@@ -5,11 +5,11 @@ VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookwormWeb", "BookwormWeb\BookwormWeb.csproj", "{4DA4B409-C3EA-4F86-806A-9792A25158D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookworm.DataAccess", "Bookworm.DataAccess\Bookworm.DataAccess.csproj", "{B04A8674-6360-43E5-AD7E-EEF7F69DEF83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookworm.DataAccess", "Bookworm.DataAccess\Bookworm.DataAccess.csproj", "{B04A8674-6360-43E5-AD7E-EEF7F69DEF83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookworm.Models", "Bookworm.Models\Bookworm.Models.csproj", "{876B1075-8453-49FE-A8DE-402CC38341E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookworm.Models", "Bookworm.Models\Bookworm.Models.csproj", "{876B1075-8453-49FE-A8DE-402CC38341E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookworm.Utility", "Bookworm.Utility\Bookworm.Utility.csproj", "{13E0C7C6-3E1E-46DD-B02F-88654F5812B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookworm.Utility", "Bookworm.Utility\Bookworm.Utility.csproj", "{13E0C7C6-3E1E-46DD-B02F-88654F5812B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,18 +10,20 @@ namespace Bookworm.DataAccess.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private AppDBContext _dBContext;
+        private AppDBContext _dbContext;
 
         public UnitOfWork(AppDBContext db)
         {
-            _dBContext = db;
-            Category = new CategoryRepository(_dBContext);
+            _dbContext = db;
+            Category = new CategoryRepository(_dbContext);
+            CoverType = new CoverTypeRepository(_dbContext);
         }
         public ICategoryRepository Category { get; private set; }
+        public ICoverTypeRepository CoverType { get; private set; }
 
         public void Save()
         {
-            _dBContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

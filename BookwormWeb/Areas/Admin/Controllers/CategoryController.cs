@@ -3,7 +3,7 @@ using Bookworm.DataAccess.Repository.IRepository;
 using Bookworm.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookwormWeb.Controllers
+namespace BookwormWeb.Areas.Admin.Controllers
 {
     public class CategoryController : Controller
     {
@@ -31,8 +31,8 @@ namespace BookwormWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category obj)
         {
-            
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
                 _unitOfWork.Category.Add(obj);
                 _unitOfWork.Save();
@@ -41,20 +41,20 @@ namespace BookwormWeb.Controllers
             }
 
             return View(obj);
-            
+
         }
 
         // GET method 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
 
-            var categoryFromDBbyID = _unitOfWork.Category.GetFirstOrDefault(item=>item.ID == id);
+            var categoryFromDBbyID = _unitOfWork.Category.GetFirstOrDefault(item => item.ID == id);
 
-            if(categoryFromDBbyID == null)
+            if (categoryFromDBbyID == null)
             {
                 return NotFound();
             }

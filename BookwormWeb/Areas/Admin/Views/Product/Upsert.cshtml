@@ -1,0 +1,68 @@
+﻿@model Product
+
+<form method="post" asp-action="Upsert">
+    <div class="border border-primary p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Edit Product:</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" type="text" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" rows="3" type="text" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ISBN"></label>
+            <input asp-for="ISBN" type="text" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Author"></label>
+            <input asp-for="Author" type="text" class="form-control" />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ListPrice"></label>
+            <input asp-for="ListPrice" type="number" class="form-control" />
+            <span asp-validation-for="ListPrice" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" type="number" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="BulkPrice50"></label>
+            <input asp-for="BulkPrice50" type="number" class="form-control" />
+            <span asp-validation-for="BulkPrice50" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="BulkPrice100"></label>
+            <input asp-for="BulkPrice100" type="number" class="form-control" />
+            <span asp-validation-for="BulkPrice100" class="text-danger"></span>
+        </div>
+
+        
+
+        <button class="btn btn-primary" type="submit" style="width: 150px; margin-right: 25px">Update</button>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary" style="width: 150px">Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }

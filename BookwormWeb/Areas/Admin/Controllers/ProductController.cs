@@ -1,7 +1,9 @@
 ﻿using Bookworm.DataAccess;
 using Bookworm.DataAccess.Repository.IRepository;
 using Bookworm.Models;
+using Bookworm.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookwormWeb.Areas.Admin.Controllers
 {
@@ -23,18 +25,33 @@ namespace BookwormWeb.Areas.Admin.Controllers
         // GET method 
         public IActionResult Upsert(int? id)
         {
-            Product product = new();
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.Category.GetAll().Select(
+                    item => new SelectListItem
+                    {
+                        Text = item.CategoryName,
+                        Value = item.ID.ToString()
+                    }),
+                CoverTypeList = _unitOfWork.CoverType.GetAll().Select(
+                    item => new SelectListItem
+                    {
+                        Text = item.Name,
+                        Value = item.Id.ToString()
+                    })
+            };
+
             if (id == null || id == 0)
             {
                 // create product
-                return View(product);
+                return View(productVM);
             } else
             {
                 // update product
             }
 
             
-            return View(product);
+            return View(productVM);
         }
 
         // POST method

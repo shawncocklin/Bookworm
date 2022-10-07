@@ -10,16 +10,17 @@ namespace BookwormWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll();
-            return View(objProductList);
+            return View();
         }
 
         // GET method 
@@ -27,6 +28,7 @@ namespace BookwormWeb.Areas.Admin.Controllers
         {
             ProductVM productVM = new()
             {
+                Product = new(),
                 CategoryList = _unitOfWork.Category.GetAll().Select(
                     item => new SelectListItem
                     {
@@ -49,22 +51,34 @@ namespace BookwormWeb.Areas.Admin.Controllers
             {
                 // update product
             }
-
-            
             return View(productVM);
         }
 
         // POST method
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Product obj)
+        public IActionResult Upsert(ProductVM obj, IFormFile? file)
         {
 
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Update(obj);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRootPath, @"images\products");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                    obj.Product.ImgageUrl = @"\images\products\" + fileName + extension;
+
+                }
+                _unitOfWork.Product.Add(obj.Product);
                 _unitOfWork.Save();
-                TempData["success"] = "Updated product successfuly";
+                TempData["success"] = "Created product successfuly";
                 return RedirectToAction("Index");
             }
 
@@ -106,5 +120,15 @@ namespace BookwormWeb.Areas.Admin.Controllers
             return RedirectToAction("Index");
 
         }
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var productList = _unitOfWork.Product.GetAll();
+            return Json(new { data = productList });
+        }
+        #endregion
+
     }
+
 }

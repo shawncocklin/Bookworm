@@ -1,4 +1,5 @@
 ﻿using Bookworm.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Routing.Template;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Bookworm.DataAccess.Repository
         public Repository(AppDBContext db)
         {
             _dbContext = db;
+            _dbContext.Products.Include(item => item.Category).Include(item => item.CoverType);
             this.dbSet = _dbContext.Set<T>();
         }
         
@@ -26,17 +28,31 @@ namespace Bookworm.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+            if(includeProperties != null)
+            {
+                foreach(var props in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(props);
+                }
+            }
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             // finds the instance of the dbset that matches the filter condition
             query = query.Where(filter);
+            if (includeProperties != null)
+            {
+                foreach (var props in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(props);
+                }
+            }
             // returns the instance as type of the entity passed in
             return query.FirstOrDefault();
         }

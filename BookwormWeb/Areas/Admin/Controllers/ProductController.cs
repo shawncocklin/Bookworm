@@ -50,8 +50,9 @@ namespace BookwormWeb.Areas.Admin.Controllers
             } else
             {
                 // update product
+                productVM.Product = _unitOfWork.Product.GetFirstOrDefault(item=>item.Id==id);
+                return View(productVM);
             }
-            return View(productVM);
         }
 
         // POST method
@@ -69,6 +70,15 @@ namespace BookwormWeb.Areas.Admin.Controllers
                     var uploads = Path.Combine(wwwRootPath, @"images\products");
                     var extension = Path.GetExtension(file.FileName);
 
+                    if(obj.Product.ImgageUrl != null)
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, obj.Product.ImgageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
                     using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
@@ -76,7 +86,13 @@ namespace BookwormWeb.Areas.Admin.Controllers
                     obj.Product.ImgageUrl = @"\images\products\" + fileName + extension;
 
                 }
-                _unitOfWork.Product.Add(obj.Product);
+                if(obj.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(obj.Product);
+                } else
+                {
+                    _unitOfWork.Product.Update(obj.Product);
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Created product successfuly";
                 return RedirectToAction("Index");
@@ -124,7 +140,7 @@ namespace BookwormWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var productList = _unitOfWork.Product.GetAll();
+            var productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
             return Json(new { data = productList });
         }
         #endregion

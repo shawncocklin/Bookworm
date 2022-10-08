@@ -45,7 +45,6 @@ namespace Bookworm.Models
         [DisplayName("Bulk Price 100+")]
         public double BulkPrice100 { get; set; }
 
-        [DisplayName("Image URL")]
         [ValidateNever]
         public string ImgageUrl { get; set; }
 

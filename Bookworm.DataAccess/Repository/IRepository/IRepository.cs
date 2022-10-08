@@ -12,9 +12,9 @@ namespace Bookworm.DataAccess.Repository.IRepository
     {
         // runs a lamda expression with the passed in iterable entity,
         // returning the first result that returns true
-        T GetFirstOrDefault(Expression<Func<T, bool>> filter);
+        T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null);
         // returns an iterable of the passed in entity
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(string? includeProperties = null);
         // add passed in entity 
         void Add(T entity);
         // remove passed in entity
